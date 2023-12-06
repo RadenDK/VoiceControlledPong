@@ -15,7 +15,7 @@ namespace VoiceControlledPong
 
         public void recognizeCommands()
         {
-            Choices commands = new Choices("Up", "Down", "Pause", "Quit");
+            Choices commands = new Choices("Up", "Down", "Stop", "Pause", "Quit");
             GrammarBuilder grammarBuilder = new GrammarBuilder(commands);
             Grammar grammar = new Grammar(grammarBuilder);
 

@@ -49,6 +49,8 @@
     <Compile Include="Ball.cs" />
     <Compile Include="CommandRecognizer.cs" />
     <Compile Include="Paddle.cs" />
+	<Compile Include="Player.cs" />
+	<Compile Include="Computer.cs" />
     <Compile Include="PongGame.cs">
       <SubType>Form</SubType>
     </Compile>

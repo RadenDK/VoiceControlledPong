@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace VoiceControlledPong
 {
     
-    internal class Paddle
+    internal abstract class Paddle
     {
-        private int width;
-        private int height;
+        protected int width;
+        protected int height;
 
-        private int xPos;
-        private int yPos;
+        protected int xPos;
+        protected int yPos;
 
-        private int yVel;
+        protected int yVel;
 
         public Paddle(int width, int height, int xPos,  int yPos)
         {
@@ -31,5 +31,6 @@ namespace VoiceControlledPong
             return new Rectangle(this.xPos, this.yPos, this.width, this.height);
         }
 
+        public abstract void move();
     }
 }
