@@ -36,7 +36,7 @@ namespace VoiceControlledPong
             }
         }
 
-        public override void move()
+        public override void move(int windowHeight)
         {
           
             yPos += yVel;

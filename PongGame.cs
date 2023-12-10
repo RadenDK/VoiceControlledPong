@@ -12,9 +12,11 @@ namespace VoiceControlledPong
     internal class PongGame : Form
     {
 
-        private Paddle player;
-        private Paddle computer;
+        private Player player;
+        private Computer computer;
         private Ball ball;
+
+        private int FPS = 60;
 
         private Timer gameTimer;
 
@@ -26,7 +28,7 @@ namespace VoiceControlledPong
             initBoardObjects();
 
             gameTimer = new Timer();
-            gameTimer.Interval = 1000 / 60;
+            gameTimer.Interval = 1000 / FPS;
             gameTimer.Tick += new EventHandler(GameUpdate);
             gameTimer.Start();
 
@@ -54,8 +56,19 @@ namespace VoiceControlledPong
 
         private void GameUpdate(object sender, EventArgs e)
         {
+            
+            // Ball movement
             ball.move();
             checkBallCollision();
+
+            // Computer movement
+            computer.trackBall(ball);
+            computer.move(this.ClientSize.Height);
+
+            // Player movement
+            player.setCommand("TESTING");
+            player.move(this.ClientSize.Height);
+
             this.Invalidate(); // Invalidate the form so it redraws
         }
 
@@ -129,8 +142,5 @@ namespace VoiceControlledPong
                 gameTimer.Dispose();
             }
         }
-
-        
-
     }
 }

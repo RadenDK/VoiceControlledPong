@@ -14,8 +14,8 @@ namespace VoiceControlledPong
         private int xPos;
         private int yPos;
 
-        private int xVel = -5;
-        private int yVel = 0;
+        private int xVel = 3;
+        private int yVel = -2;
 
 
         public Ball(int width, int height, int xPos, int yPos)

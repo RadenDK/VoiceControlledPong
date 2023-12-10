@@ -31,6 +31,6 @@ namespace VoiceControlledPong
             return new Rectangle(this.xPos, this.yPos, this.width, this.height);
         }
 
-        public abstract void move();
+        public abstract void move(int windowHeight);
     }
 }
