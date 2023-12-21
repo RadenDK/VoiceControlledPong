@@ -5,7 +5,6 @@ namespace VoiceControlledPong
 {
     internal class Computer : Paddle
     {
-        private int yVel;
         private int ySpeed;
 
         public Computer(int width, int height, int xPos, int yPos) : base(width, height, xPos, yPos)

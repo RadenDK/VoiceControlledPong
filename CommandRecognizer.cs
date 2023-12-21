@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Speech.Recognition;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Threading;
 
 namespace VoiceControlledPong
 {
-
     internal class CommandRecognizer
     {
         private SpeechRecognitionEngine speechRecognizer = new SpeechRecognitionEngine();
+        private PongGame pongGame;
 
-        public void recognizeCommands()
+        public CommandRecognizer(PongGame pongGame)
+        {
+            this.pongGame = pongGame;
+        }
+
+        public void RecognizeCommands()
         {
             Choices commands = new Choices("Up", "Down", "Stop", "Pause", "Quit");
             GrammarBuilder grammarBuilder = new GrammarBuilder(commands);
@@ -25,13 +26,15 @@ namespace VoiceControlledPong
             speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
 
             Console.WriteLine("Voice-controlled Pong is running. Say commands or 'Quit' to exit.");
-            Console.ReadLine(); // Keep the application running
+            Console.ReadLine(); 
         }
 
         private void SpeechRecognizedHandler(object sender, SpeechRecognizedEventArgs e)
         {
             string recognizedText = e.Result.Text;
             Console.WriteLine($"Recognized: {recognizedText}");
+
+            pongGame.SetCommand(recognizedText);
 
             if (recognizedText.Equals("Quit", StringComparison.OrdinalIgnoreCase))
             {
@@ -41,8 +44,8 @@ namespace VoiceControlledPong
 
         private void Quit()
         {
-            speechRecognizer.Dispose(); // Close and release resources
-            Environment.Exit(0); // Exit the application
+            speechRecognizer.Dispose();
+            Environment.Exit(0); 
         }
     }
 }

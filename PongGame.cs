@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 
 namespace VoiceControlledPong
@@ -16,18 +17,30 @@ namespace VoiceControlledPong
         private Computer computer;
         private Ball ball;
 
+        private CommandRecognizer commandRecognizer;
+
         private int FPS = 60;
 
-        private Timer gameTimer;
+        private System.Windows.Forms.Timer gameTimer;
 
         public PongGame()
         {
             this.Text = "Voice Controlled Pong Game";
             this.Size = new Size(800, 600);
 
+            this.commandRecognizer = new CommandRecognizer(this);
+
+            Thread commandRecognizerThread = new Thread(() =>
+            {
+                commandRecognizer.RecognizeCommands();
+
+            });
+
+            commandRecognizerThread.Start();
+
             initBoardObjects();
 
-            gameTimer = new Timer();
+            gameTimer = new System.Windows.Forms.Timer();
             gameTimer.Interval = 1000 / FPS;
             gameTimer.Tick += new EventHandler(GameUpdate);
             gameTimer.Start();
@@ -54,8 +67,14 @@ namespace VoiceControlledPong
             ball = new Ball(ballWidth, ballHeight, ballX, ballY);
         }
 
+        public void SetCommand(string command)
+        {
+            player.setCommand(command);
+        }
+
         private void GameUpdate(object sender, EventArgs e)
         {
+           
             
             // Ball movement
             ball.move();
@@ -66,11 +85,11 @@ namespace VoiceControlledPong
             computer.move(this.ClientSize.Height);
 
             // Player movement
-            player.setCommand("TESTING");
             player.move(this.ClientSize.Height);
 
             this.Invalidate(); // Invalidate the form so it redraws
         }
+
 
         private void checkBallCollision()
         {
@@ -106,6 +125,7 @@ namespace VoiceControlledPong
             {
                 collison = true;
             }
+            // Collides with the paddle right side
             else if (ball.getRect().Right >= computer.getRect().Left && ball.getRect().Right <= computer.getRect().Right)
             {
                 collison = true;
@@ -141,6 +161,8 @@ namespace VoiceControlledPong
                 gameTimer.Stop();
                 gameTimer.Dispose();
             }
+
+            Application.Exit(); 
         }
     }
 }

@@ -11,7 +11,7 @@ namespace VoiceControlledPong
 
         public Player(int width, int height, int xPos, int yPos) : base(width, height, xPos, yPos)
         {
-            yVelSpeed = 5;
+            yVelSpeed = 3;
         }
 
         public void setCommand(string command)
@@ -24,11 +24,11 @@ namespace VoiceControlledPong
         {
             if (currentCommand == "Up")
             {
-                yVel = yVelSpeed;
+                yVel = -yVelSpeed;
             }
             else if (currentCommand == "Down")
             {
-                yVel = -yVelSpeed;
+                yVel = +yVelSpeed;
             }
             else if (currentCommand == "Stop")
             {
@@ -40,6 +40,8 @@ namespace VoiceControlledPong
         {
           
             yPos += yVel;
+
+            yPos = Math.Max(0, Math.Min(windowHeight - height, yPos));
         }
 
 
